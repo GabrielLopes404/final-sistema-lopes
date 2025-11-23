@@ -213,3 +213,32 @@ The application is architected to seamlessly transition from in-memory to databa
 - Desktop: Static 2-column grid layout with hover effects
 - Improved user experience on mobile devices with clear scroll indicators
 - Fixed image import issues by using placeholder SVG data URLs for BeforeAfter section
+
+## Vercel Deployment Setup (November 23, 2025)
+
+**Deployment Configuration:**
+- Project ready for Vercel deployment with complete configuration
+- `vercel.json` configured for full-stack deployment (frontend + backend)
+- Build command: `npm run build` (Vite + esbuild bundle)
+- Output directory: `dist/public` (optimized static assets)
+- Production server: Express.js serving built frontend
+- Build process tested successfully - all assets minified and optimized
+
+**Documentation Created:**
+- `LEIA-ME-VERCEL.md` - Quick start guide in Portuguese (3 steps)
+- `GUIA_DEPLOY_VERCEL.md` - Complete step-by-step deployment guide
+- `COMANDOS_RAPIDOS_VERCEL.md` - Ready-to-copy Git commands
+- `RESUMO-DEPLOY.txt` - Visual quick reference guide
+
+**Deployment Process:**
+1. Create GitHub repository and push code
+2. Connect Vercel to GitHub repository
+3. Vercel auto-detects Vite configuration
+4. Automatic deployment with zero additional configuration needed
+
+**Build Verification:**
+- Production build tested successfully (27.49s)
+- Total bundle size: ~950 KB (optimized with code splitting)
+- Assets: 29 chunks with proper lazy loading
+- Images optimized and included in build
+- No critical errors or warnings in build process
