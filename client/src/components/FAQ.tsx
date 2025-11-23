@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
 import type { Faq } from "@shared/schema";
 
 export function FAQ() {
   const { data: faqs = [], isLoading } = useQuery<Faq[]>({
     queryKey: ["/api/faqs"],
   });
-  const [openId, setOpenId] = useState<string | null>(null);
 
   if (isLoading) {
     return (
@@ -34,38 +32,28 @@ export function FAQ() {
         </div>
 
         <div className="space-y-3 md:space-y-4">
-          {faqs.map((faq, index) => {
-            const isOpen = openId === faq.id;
-            
-            return (
-              <div
-                key={faq.id}
-                className="border border-border rounded-lg px-4 md:px-6 bg-card hover-elevate"
-                data-testid={`faq-item-${index}`}
+          {faqs.map((faq, index) => (
+            <details
+              key={faq.id}
+              className="group border border-border rounded-lg px-4 md:px-6 bg-card hover-elevate"
+              data-testid={`faq-item-${index}`}
+            >
+              <summary 
+                className="list-none cursor-pointer w-full text-left font-display font-bold text-base md:text-lg hover:text-primary transition-colors py-4 md:py-6 flex items-center justify-between gap-4"
+                data-testid={`button-faq-trigger-${index}`}
               >
-                <button
-                  onClick={() => setOpenId(isOpen ? null : faq.id)}
-                  className="w-full text-left font-display font-bold text-base md:text-lg hover:text-primary transition-colors py-4 md:py-6 flex items-center justify-between gap-4"
-                  data-testid={`button-faq-trigger-${index}`}
-                  aria-expanded={isOpen}
-                >
-                  <span>{faq.question}</span>
-                  <ChevronDown 
-                    className={`h-4 w-4 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-                
-                {isOpen && (
-                  <div 
-                    className="text-muted-foreground leading-relaxed pb-4 md:pb-6 text-sm md:text-base animate-accordion-down"
-                    data-testid={`text-faq-answer-${index}`}
-                  >
-                    {faq.answer}
-                  </div>
-                )}
+                <span>{faq.question}</span>
+                <ChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200 group-open:rotate-180" />
+              </summary>
+              
+              <div 
+                className="text-muted-foreground leading-relaxed pb-4 md:pb-6 text-sm md:text-base"
+                data-testid={`text-faq-answer-${index}`}
+              >
+                {faq.answer}
               </div>
-            );
-          })}
+            </details>
+          ))}
         </div>
       </div>
     </section>
