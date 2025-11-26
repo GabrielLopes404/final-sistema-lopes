@@ -150,74 +150,76 @@ export function Portfolio() {
       </div>
 
       {selectedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 p-4"
+        <div
+          className="fixed inset-0 z-50 bg-black/95 overflow-y-auto"
           onClick={closeLightbox}
         >
-          <button
-            onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
-            className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
-          >
-            <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-          </button>
+          <div className="min-h-full flex flex-col items-center justify-center p-4 py-16">
+            <button
+              onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
+              className="fixed top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-20"
+            >
+              <X className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            </button>
 
-          {filteredItems.length > 1 && (
-            <>
-              <button
-                onClick={(e) => { e.stopPropagation(); prevImage(); }}
-                className="absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
-              >
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </button>
-              <button
-                onClick={(e) => { e.stopPropagation(); nextImage(); }}
-                className="absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-10"
-              >
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
-              </button>
-            </>
-          )}
+            {filteredItems.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                  className="fixed left-2 sm:left-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-20"
+                >
+                  <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                  className="fixed right-2 sm:right-6 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors z-20"
+                >
+                  <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                </button>
+              </>
+            )}
 
-          <motion.div
-            key={selectedImage.id}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="relative max-w-5xl w-full max-h-[90vh] flex flex-col items-center"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <img
-              src={selectedImage.imageUrl}
-              alt={selectedImage.title}
-              className="max-w-full max-h-[75vh] sm:max-h-[80vh] object-contain rounded-lg sm:rounded-xl shadow-2xl"
-            />
-            <div className="mt-4 sm:mt-6 text-center px-4">
-              <span className="inline-block px-3 py-1 rounded-full bg-primary/90 text-white text-xs font-semibold uppercase tracking-wider mb-2">
-                {selectedImage.category}
-              </span>
-              <h3 className="text-white font-bold text-lg sm:text-xl lg:text-2xl mb-1">{selectedImage.title}</h3>
-              {selectedImage.client && (
-                <p className="text-white/70 text-sm sm:text-base">Cliente: {selectedImage.client}</p>
-              )}
+            <motion.div
+              key={selectedImage.id}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="w-full max-w-4xl flex flex-col items-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="w-full flex items-center justify-center mb-4 sm:mb-6">
+                <img
+                  src={selectedImage.imageUrl}
+                  alt={selectedImage.title}
+                  className="w-auto h-auto max-w-full max-h-[70vh] object-contain rounded-lg sm:rounded-xl shadow-2xl"
+                  style={{ minHeight: '200px' }}
+                />
+              </div>
+              <div className="text-center px-4">
+                <span className="inline-block px-3 py-1 rounded-full bg-primary/90 text-white text-xs font-semibold uppercase tracking-wider mb-2">
+                  {selectedImage.category}
+                </span>
+                <h3 className="text-white font-bold text-lg sm:text-xl lg:text-2xl mb-1">{selectedImage.title}</h3>
+                {selectedImage.client && (
+                  <p className="text-white/70 text-sm sm:text-base">Cliente: {selectedImage.client}</p>
+                )}
+              </div>
+            </motion.div>
+
+            <div className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+              {filteredItems.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); setSelectedImage(filteredItems[index]); }}
+                  className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all ${
+                    index === currentIndex ? "bg-primary w-6 sm:w-8" : "bg-white/30 hover:bg-white/50"
+                  }`}
+                />
+              ))}
             </div>
-          </motion.div>
-
-          <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
-            {filteredItems.map((_, index) => (
-              <button
-                key={index}
-                onClick={(e) => { e.stopPropagation(); setCurrentIndex(index); setSelectedImage(filteredItems[index]); }}
-                className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full transition-all ${
-                  index === currentIndex ? "bg-primary w-6 sm:w-8" : "bg-white/30 hover:bg-white/50"
-                }`}
-              />
-            ))}
           </div>
-        </motion.div>
+        </div>
       )}
     </section>
   );
