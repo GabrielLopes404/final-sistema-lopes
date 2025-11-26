@@ -22,5 +22,4 @@ coverage
 *.temp
 
 # Screenshot and temporary images
-attached_assets/image_*.png
 attached_assets/Screenshot*.png
